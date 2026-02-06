@@ -1,3 +1,4 @@
+// Prisma Client initialization with custom datasource for Vercel deployment
 import { PrismaClient } from "@prisma/client";
 
 declare global {
