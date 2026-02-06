@@ -10,7 +10,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
     { name: "Stories", href: "/stories" },
-    { name: "Poems", href: "/poems" },
     { name: "Community", href: "/community" },
     { name: "About", href: "/about" },
 ];
@@ -57,12 +56,16 @@ export function Navbar() {
                     </div>
 
                     <div className="hidden md:flex items-center gap-4">
-                        <Button variant="ghost" size="sm">
-                            Log in
-                        </Button>
-                        <Button variant="premium" size="sm">
-                            Start Writing
-                        </Button>
+                        <Link href="/login">
+                            <Button variant="ghost" size="sm">
+                                Log in
+                            </Button>
+                        </Link>
+                        <Link href="/signup">
+                            <Button variant="premium" size="sm">
+                                Start Writing
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -96,12 +99,16 @@ export function Navbar() {
                                 </Link>
                             ))}
                             <div className="flex flex-col gap-2 mt-2">
-                                <Button variant="ghost" className="justify-start">
-                                    Log in
-                                </Button>
-                                <Button variant="premium" className="justify-start">
-                                    Start Writing
-                                </Button>
+                                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                                    <Button variant="ghost" className="justify-start w-full">
+                                        Log in
+                                    </Button>
+                                </Link>
+                                <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                                    <Button variant="premium" className="justify-start w-full">
+                                        Start Writing
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
                     </motion.div>
