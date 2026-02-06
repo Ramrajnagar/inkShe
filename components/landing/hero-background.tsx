@@ -32,14 +32,14 @@ export const HeroBackground = () => {
                         rotate: [0, 5, -5, 0],
                     }}
                     transition={{
-                        duration: 4 + Math.random() * 2,
+                        duration: 4 + (i % 3), // Deterministic duration
                         repeat: Infinity,
                         ease: "easeInOut",
                         delay: item.delay,
                     }}
                     whileHover={{
                         scale: 1.1,
-                        x: Math.random() * 20 - 10,
+                        x: (i % 2 === 0 ? 10 : -10), // Deterministic hover movement
                     }}
                 >
                     <div className={cn("transition-transform duration-500 ease-out group-hover:scale-110 group-hover:translate-x-2")}>
