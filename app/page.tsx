@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Heart, Sparkles, PenTool, Lock, Users } from "lucide-react";
 import { SketchUnderline, SketchSparkle, SketchArrow } from "@/components/ui/sketch-decorations";
+import { HeroBackground } from "@/components/landing/hero-background";
 import { useRef } from "react";
 
 export default function Home() {
