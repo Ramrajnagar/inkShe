@@ -5,12 +5,46 @@
 :root {
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  
+
   --color-ink-pink: #F7C1D9;
   --color-ink-blush: #E88DB3;
   --color-ink-purple: #B39DDB;
   --color-ink-neutral: #FFF8FB;
   --color-ink-text: #2B2B2B;
+
+  /* Shadcn UI Variables - Mapped to InkShe Theme */
+  --background: 0 0% 100%;
+  --foreground: 0 0% 17%;
+  /* #2B2B2B */
+
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 17%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 17%;
+
+  --primary: 334 68% 73%;
+  /* #E88DB3 (ink-blush) */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 335 78% 86%;
+  /* #F7C1D9 (ink-pink) */
+  --secondary-foreground: 0 0% 17%;
+
+  --muted: 330 20% 96%;
+  --muted-foreground: 0 0% 45%;
+
+  --accent: 335 78% 86%;
+  --accent-foreground: 0 0% 17%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 335 78% 86%;
+  --input: 335 78% 86%;
+  --ring: 334 68% 73%;
+
+  --radius: 0.75rem;
 }
 
 body {
@@ -19,7 +53,12 @@ body {
   font-family: var(--font-body);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
 }
 
