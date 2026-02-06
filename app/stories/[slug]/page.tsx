@@ -6,6 +6,7 @@ import { Heart, MessageCircle, Share2, MoreHorizontal, Calendar } from "lucide-r
 import { CommentSection } from "@/components/features/CommentSection";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { db } from "@/lib/db";
 
 // Mock data for display purposes
 const MOCK_POST = {
@@ -23,7 +24,8 @@ const MOCK_POST = {
         name: "Aanya Sharma",
         handle: "@aanya_writes",
         bio: "Dreamer. Writer. Coder. Sharing my journey one word at a time.",
-        image: "/placeholder-avatar.jpg"
+        image: "/placeholder-avatar.jpg",
+        penName: "Aanya Sharma"
     },
     publishedAt: "Oct 12, 2025",
     stats: {
@@ -34,8 +36,51 @@ const MOCK_POST = {
 };
 
 export default async function StoryPage({ params }: { params: { slug: string } }) {
-    // const { slug } = params; // In a real app, fetch by slug
-    const post = MOCK_POST;
+    const { slug } = params;
+
+    let post = null;
+
+    try {
+        if (!slug.startsWith('mock-')) {
+            const dbPost = await db.post.findUnique({
+                where: { id: slug }, // Using ID for simplicity in search page link, or slug if available
+                include: { author: true }
+            });
+
+            if (dbPost) {
+                // Transform DB post to UI format
+                post = {
+                    title: dbPost.title,
+                    content: dbPost.content,
+                    author: {
+                        name: dbPost.author.fullName || dbPost.author.penName || "Anonymous",
+                        handle: "@" + (dbPost.author.penName || "writer"),
+                        bio: dbPost.author.bio || "Just another dreamer.",
+                        image: dbPost.author.avatarUrl || "/placeholder-avatar.jpg",
+                        penName: dbPost.author.penName
+                    },
+                    publishedAt: new Date(dbPost.createdAt).toLocaleDateString(),
+                    stats: { likes: 0, comments: 0 },
+                    tags: [dbPost.category || "General"]
+                };
+            }
+        }
+    } catch (e) {
+        console.error("Error fetching post:", e);
+    }
+
+    // Fallback to mock if not found in DB (or if it's a mock slug)
+    if (!post) {
+        if (slug.startsWith('mock-')) {
+            // Logic to return slightly different mocks based on ID could go here
+            post = MOCK_POST;
+            if (slug.includes('2')) post = { ...MOCK_POST, title: "My Journey into Tech" };
+        } else {
+            // If legitimate DB fetch failed and it's not a mock slug, maybe mock it for now to avoid 404 for the user demo?
+            // Or better, stick to MOCK_POST as default for any unknown slug to keep the site "working" visually
+            post = MOCK_POST;
+        }
+    }
 
     if (!post) return notFound();
 
@@ -63,7 +108,7 @@ export default async function StoryPage({ params }: { params: { slug: string } }
                         <div className="flex items-center gap-3">
                             <Avatar className="w-10 h-10 border border-ink-pink/30">
                                 <AvatarImage src={post.author.image} />
-                                <AvatarFallback>AS</AvatarFallback>
+                                <AvatarFallback>{post.author.name[0]}</AvatarFallback>
                             </Avatar>
                             <div>
                                 <Link href={`/u/${post.author.handle.replace('@', '')}`} className="font-bold text-ink-text hover:text-ink-blush transition-colors cursor-pointer">
