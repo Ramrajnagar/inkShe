@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  
+  --color-ink-pink: #F7C1D9;
+  --color-ink-blush: #E88DB3;
+  --color-ink-purple: #B39DDB;
+  --color-ink-neutral: #FFF8FB;
+  --color-ink-text: #2B2B2B;
+}
+
+body {
+  background-color: var(--color-ink-neutral);
+  color: var(--color-ink-text);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
