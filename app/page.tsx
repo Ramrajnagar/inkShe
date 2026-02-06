@@ -61,6 +61,11 @@ export default function Home() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-32 pb-40 flex flex-col items-center text-center relative z-10 w-full min-h-[90vh] justify-center">
 
+        {/* Animated Hero Background */}
+        <div className="w-full max-w-5xl mb-12">
+          <HeroBackground />
+        </div>
+
         {/* Decorative Sketches around Hero */}
         <SketchSparkle className="absolute top-1/4 left-[15%] text-ink-purple w-16 h-16 opacity-60" delay={0.5} />
         <SketchSparkle className="absolute bottom-1/3 right-[15%] text-ink-blush w-12 h-12 opacity-60" delay={0.8} />
