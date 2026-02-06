@@ -36,7 +36,8 @@ export default async function DashboardPage() {
         redirect("/login");
     }
 
-    let stats, recentStories;
+    let stats: { stories: number; views: number; likes: number; };
+    let recentStories: any[] = [];
 
     try {
         stats = await getUserStats(session.userId);
