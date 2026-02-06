@@ -12,7 +12,13 @@ const loginSchema = z.object({
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { email, password } = loginSchema.parse(body);
+        const result = loginSchema.safeParse(body);
+
+        if (!result.success) {
+            return NextResponse.json({ error: "Invalid email or password format" }, { status: 400 });
+        }
+
+        const { email, password } = result.data;
 
         const user = await db.user.findUnique({
             where: { email },

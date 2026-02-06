@@ -36,8 +36,18 @@ export default async function DashboardPage() {
         redirect("/login");
     }
 
-    const stats = await getUserStats(session.userId);
-    const recentStories = await getRecentStories(session.userId);
+    let stats, recentStories;
+
+    try {
+        stats = await getUserStats(session.userId);
+        recentStories = await getRecentStories(session.userId);
+    } catch (error) {
+        console.error("Dashboard data fetch error:", error);
+        // Fallback or safe error state
+        stats = { stories: 0, views: 0, likes: 0 };
+        recentStories = [];
+    }
+
 
     return (
         <div className="space-y-8 min-h-screen pb-20">
