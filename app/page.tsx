@@ -59,7 +59,7 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-32 pb-40 flex flex-col items-center text-center relative z-10 w-full min-h-[90vh] justify-center">
+      <section className="container mx-auto px-4 pt-20 pb-40 flex flex-col items-center text-center relative z-10 w-full min-h-[90vh] justify-center">
 
         {/* Animated Hero Background */}
         <div className="w-full max-w-5xl mb-12">
