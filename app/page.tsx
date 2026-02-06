@@ -8,6 +8,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Heart, Sparkles, PenTool, Lock, Users } from "lucide-react";
 import { SketchUnderline, SketchSparkle, SketchArrow } from "@/components/ui/sketch-decorations";
 import { HeroBackground } from "@/components/landing/hero-background";
+import { RunningText } from "@/components/landing/running-text";
 import { useRef } from "react";
 
 export default function Home() {
@@ -23,6 +24,11 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-soft-gradient relative overflow-hidden" ref={ref}>
       <Navbar />
+
+      {/* Decorative Running Text Banner */}
+      <div className="relative z-20 mt-16">
+        <RunningText />
+      </div>
 
       {/* Floating Elements Background - Aesthetic Sketches */}
       <div className="absolute inset-0 pointer-events-none sticky top-0 h-screen overflow-hidden">
