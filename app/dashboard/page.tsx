@@ -36,6 +36,13 @@ export default async function DashboardPage() {
         redirect("/login");
     }
 
+    const user = await db.user.findUnique({
+        where: { id: session.userId },
+        select: { penName: true }
+    });
+
+    const displayName = user?.penName || "Writer";
+
     let stats: { stories: number; views: number; likes: number; };
     let recentStories: any[] = [];
 
@@ -58,7 +65,7 @@ export default async function DashboardPage() {
                     <SketchSparkle className="w-24 h-24 text-ink-pink" />
                 </div>
                 <h1 className="text-4xl font-heading font-bold text-ink-text relative inline-block">
-                    Hello, Writer!
+                    Hello, {displayName}!
                     <span className="text-2xl ml-2">✨</span>
                     <SketchUnderline className="absolute -bottom-2 left-0 w-full text-ink-blush/40 h-4" />
                 </h1>
