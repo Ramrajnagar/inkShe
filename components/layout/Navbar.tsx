@@ -19,15 +19,16 @@ export function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-ink-neutral/80 backdrop-blur-md border-b border-ink-pink/20">
+    return (
+        <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300">
             <div className="container mx-auto px-4 md:px-6">
-                <div className="flex h-16 items-center justify-between">
+                <div className="flex h-20 items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <div className="bg-ink-pink/20 p-2 rounded-full group-hover:bg-ink-pink/30 transition-colors">
-                                <PenTool className="h-5 w-5 text-ink-blush" />
+                        <Link href="/" className="flex items-center gap-3 group">
+                            <div className="bg-gradient-to-br from-ink-blush to-ink-purple p-2.5 rounded-xl text-white shadow-lg shadow-ink-pink/20 group-hover:scale-105 transition-transform">
+                                <PenTool className="h-6 w-6 fill-current" />
                             </div>
-                            <span className="text-2xl font-heading font-bold bg-gradient-to-r from-ink-blush to-ink-purple bg-clip-text text-transparent">
+                            <span className="text-3xl font-heading font-black tracking-tight text-ink-text group-hover:text-ink-blush transition-colors">
                                 InkShe
                             </span>
                         </Link>
@@ -40,29 +41,23 @@ export function Navbar() {
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    "text-sm font-medium transition-colors hover:text-ink-blush relative",
-                                    pathname === item.href ? "text-ink-blush" : "text-ink-text/80"
+                                    "text-base font-bold transition-all hover:text-ink-blush px-4 py-2 rounded-full hover:bg-ink-pink/10",
+                                    pathname === item.href ? "text-ink-blush bg-ink-pink/5" : "text-ink-text/70"
                                 )}
                             >
                                 {item.name}
-                                {pathname === item.href && (
-                                    <motion.div
-                                        layoutId="navbar-indicator"
-                                        className="absolute -bottom-[21px] left-0 right-0 h-[2px] bg-ink-blush rounded-full"
-                                    />
-                                )}
                             </Link>
                         ))}
                     </div>
 
                     <div className="hidden md:flex items-center gap-4">
                         <Link href="/login">
-                            <Button variant="ghost" size="sm">
+                            <Button variant="ghost" size="lg" className="font-semibold text-ink-text hover:text-ink-blush hover:bg-ink-pink/10">
                                 Log in
                             </Button>
                         </Link>
                         <Link href="/signup">
-                            <Button variant="premium" size="sm">
+                            <Button variant="premium" size="lg" className="shadow-md shadow-ink-pink/20 font-bold px-6">
                                 Start Writing
                             </Button>
                         </Link>
@@ -70,10 +65,10 @@ export function Navbar() {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="md:hidden p-2 text-ink-text"
+                        className="md:hidden p-2 text-ink-text hover:bg-ink-pink/10 rounded-lg transition-colors"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
-                        <Menu className="h-6 w-6" />
+                        <Menu className="h-7 w-7" />
                     </button>
                 </div>
             </div>
@@ -85,27 +80,27 @@ export function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden border-t border-ink-pink/20 bg-ink-neutral"
+                        className="md:hidden border-t border-ink-pink/20 bg-white shadow-xl"
                     >
-                        <div className="flex flex-col p-4 gap-4">
+                        <div className="flex flex-col p-6 gap-4">
                             {navItems.map((item) => (
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className="text-base font-medium text-ink-text/80 hover:text-ink-blush"
+                                    className="text-lg font-bold text-ink-text/80 hover:text-ink-blush p-2 hover:bg-ink-pink/5 rounded-lg"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {item.name}
                                 </Link>
                             ))}
-                            <div className="flex flex-col gap-2 mt-2">
+                            <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-ink-pink/10">
                                 <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button variant="ghost" className="justify-start w-full">
+                                    <Button variant="ghost" className="justify-start w-full text-lg font-semibold">
                                         Log in
                                     </Button>
                                 </Link>
                                 <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button variant="premium" className="justify-start w-full">
+                                    <Button variant="premium" className="justify-start w-full text-lg font-bold shadow-md">
                                         Start Writing
                                     </Button>
                                 </Link>
