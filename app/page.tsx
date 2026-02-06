@@ -30,99 +30,102 @@ export default function Home() {
         <RunningText />
       </div>
 
-      {/* Floating Elements Background - Aesthetic Sketches */}
-      <div className="absolute inset-0 pointer-events-none sticky top-0 h-screen overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 100 }}
-            animate={{
-              opacity: [0.3, 0.6, 0.3],
-              y: -50,
-              x: Math.sin(i) * 30,
-              rotate: [0, 10, -10, 0],
-            }}
-            transition={{
-              duration: 12 + i * 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 2,
-            }}
-            className="absolute text-ink-pink opacity-40 mix-blend-multiply"
-            style={{
-              left: `${15 + i * 15}%`,
-              top: `${20 + (i % 3) * 25}%`,
-            }}
-          >
-            {/* Using SVG sketches instead of just emoji */}
-            {i % 2 === 0 ? (
-              <SketchSparkle className="w-12 h-12 text-ink-blush/40" />
-            ) : (
-              <Heart className="w-8 h-8 text-ink-pink/50 fill-ink-pink/20" />
-            )}
-          </motion.div>
-        ))}
-      </div>
+      {/* Hero Section with Localized Background */}
+      <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
 
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-40 flex flex-col items-center text-center relative z-10 w-full min-h-[90vh] justify-center">
-
-        {/* Animated Hero Background */}
-        <div className="w-full max-w-5xl mb-12">
-          <HeroBackground />
+        {/* Moved Floating Elements Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{
+                opacity: [0.3, 0.6, 0.3],
+                y: -50,
+                x: Math.sin(i) * 30,
+                rotate: [0, 10, -10, 0],
+              }}
+              transition={{
+                duration: 12 + i * 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 2,
+              }}
+              className="absolute text-ink-pink opacity-40 mix-blend-multiply"
+              style={{
+                left: `${15 + i * 15}%`,
+                top: `${20 + (i % 3) * 25}%`,
+              }}
+            >
+              {/* Using SVG sketches instead of just emoji */}
+              {i % 2 === 0 ? (
+                <SketchSparkle className="w-12 h-12 text-ink-blush/40" />
+              ) : (
+                <Heart className="w-8 h-8 text-ink-pink/50 fill-ink-pink/20" />
+              )}
+            </motion.div>
+          ))}
         </div>
 
-        {/* Decorative Sketches around Hero */}
-        <SketchSparkle className="absolute top-1/4 left-[15%] text-ink-purple w-16 h-16 opacity-60" delay={0.5} />
-        <SketchSparkle className="absolute bottom-1/3 right-[15%] text-ink-blush w-12 h-12 opacity-60" delay={0.8} />
+        {/* Hero Content Container */}
+        <div className="container mx-auto px-4 pt-20 pb-40 flex flex-col items-center text-center relative z-10">
+          {/* Animated Hero Background */}
+          <div className="w-full max-w-5xl mb-12">
+            <HeroBackground />
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl space-y-8 relative"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/70 backdrop-blur-md border border-ink-pink text-ink-blush font-semibold shadow-sm mb-6"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>A safe space created just for her.</span>
-          </motion.div>
-
-          <h1 className="text-6xl md:text-8xl font-heading font-bold text-ink-text leading-[1.1] tracking-tight">
-            Your words. <br />
-            <span className="relative inline-block text-ink-blush">
-              Your freedom.
-              <SketchUnderline className="absolute -bottom-2 left-0 w-full text-ink-pink h-6" delay={1} />
-            </span>
-          </h1>
-
-          <p className="text-2xl text-ink-text/80 leading-relaxed max-w-2xl mx-auto font-light">
-            A cozy corner of the internet to write, share, and just
-            <span className="font-medium text-ink-blush italic px-1"> be yourself </span>
-            without judgment.
-          </p>
+          {/* Decorative Sketches around Hero */}
+          <SketchSparkle className="absolute top-1/4 left-[15%] text-ink-purple w-16 h-16 opacity-60" delay={0.5} />
+          <SketchSparkle className="absolute bottom-1/3 right-[15%] text-ink-blush w-12 h-12 opacity-60" delay={0.8} />
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl space-y-8 relative"
           >
-            <Link href="/signup">
-              <Button variant="premium" size="lg" className="h-16 px-12 text-xl rounded-2xl shadow-lg shadow-ink-pink/20 hover:shadow-ink-pink/40 transition-all hover:-translate-y-1">
-                Start Writing
-                <PenTool className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <Link href="/stories">
-              <Button variant="outline" size="lg" className="h-16 px-12 text-xl rounded-2xl bg-white/60 border-ink-pink/50 text-ink-text hover:bg-white hover:border-ink-blush transition-all">
-                Read Stories
-              </Button>
-            </Link>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/70 backdrop-blur-md border border-ink-pink text-ink-blush font-semibold shadow-sm mb-6"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>A safe space created just for her.</span>
+            </motion.div>
+
+            <h1 className="text-6xl md:text-8xl font-heading font-bold text-ink-text leading-[1.1] tracking-tight">
+              Your words. <br />
+              <span className="relative inline-block text-ink-blush">
+                Your freedom.
+                <SketchUnderline className="absolute -bottom-2 left-0 w-full text-ink-pink h-6" delay={1} />
+              </span>
+            </h1>
+
+            <p className="text-2xl text-ink-text/80 leading-relaxed max-w-2xl mx-auto font-light">
+              A cozy corner of the internet to write, share, and just
+              <span className="font-medium text-ink-blush italic px-1"> be yourself </span>
+              without judgment.
+            </p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8"
+            >
+              <Link href="/signup">
+                <Button variant="premium" size="lg" className="h-16 px-12 text-xl rounded-2xl shadow-lg shadow-ink-pink/20 hover:shadow-ink-pink/40 transition-all hover:-translate-y-1">
+                  Start Writing
+                  <PenTool className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              <Link href="/stories">
+                <Button variant="outline" size="lg" className="h-16 px-12 text-xl rounded-2xl bg-white/60 border-ink-pink/50 text-ink-text hover:bg-white hover:border-ink-blush transition-all">
+                  Read Stories
+                </Button>
+              </Link>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* How It Works Section */}
