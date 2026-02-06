@@ -26,10 +26,12 @@ export default function SignupPage() {
                 body: JSON.stringify({ email, password, penName }),
             });
 
+            const data = await res.json();
+
             if (res.ok) {
                 router.push("/dashboard");
             } else {
-                alert("Registration failed");
+                alert(data.error || "Registration failed");
             }
         } catch (err) {
             console.error(err);
