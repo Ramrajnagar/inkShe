@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Heart, Sparkles, Shield } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutPage() {
     return (
@@ -54,7 +55,9 @@ export default function AboutPage() {
 
                 <div className="mt-20 text-center bg-white/50 border border-ink-pink/20 rounded-3xl p-12">
                     <h2 className="text-3xl font-heading font-bold mb-6">Ready to tell your story?</h2>
-                    <Button variant="premium" size="lg">Join the Community</Button>
+                    <Link href="/signup">
+                        <Button variant="premium" size="lg">Join the Community</Button>
+                    </Link>
                 </div>
             </div>
 

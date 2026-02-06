@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { motion } from "framer-motion";
@@ -66,14 +67,58 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button variant="premium" size="lg" className="h-14 px-10 text-lg">
-              Start Writing
-            </Button>
-            <Button variant="outline" size="lg" className="h-14 px-10 text-lg bg-white/50 border-ink-text/10">
-              Read Stories
-            </Button>
+            <Link href="/signup">
+              <Button variant="premium" size="lg" className="h-14 px-10 text-lg">
+                Start Writing
+              </Button>
+            </Link>
+            <Link href="/stories">
+              <Button variant="outline" size="lg" className="h-14 px-10 text-lg bg-white/50 border-ink-text/10">
+                Read Stories
+              </Button>
+            </Link>
           </div>
         </motion.div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="container mx-auto px-4 py-20 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-ink-text mb-4">How InkShe Works</h2>
+          <p className="text-lg text-ink-text/60 max-w-2xl mx-auto">It's simple, safe, and made for you.</p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              step: "01",
+              title: "Create Your Pen Name",
+              desc: "Choose a secret identity. No real names required.",
+            },
+            {
+              step: "02",
+              title: "Write Your Heart Out",
+              desc: "Use our beautiful editor to write stories, diaries, or thoughts.",
+            },
+            {
+              step: "03",
+              title: "Share or Keep Private",
+              desc: "Publish to the community or keep it locked in your digital diary.",
+            },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.2 }}
+              className="relative p-8 rounded-3xl bg-white/40 border border-white/60 backdrop-blur-sm"
+            >
+              <span className="absolute -top-6 left-8 text-6xl font-black text-ink-pink/20">{item.step}</span>
+              <h3 className="text-xl font-bold text-ink-text mt-4 mb-2 relative z-10">{item.title}</h3>
+              <p className="text-ink-text/70 relative z-10">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* Features Grid */}
@@ -110,6 +155,42 @@ export default function Home() {
               <h3 className="text-xl font-heading font-bold mb-3">{feature.title}</h3>
               <p className="text-ink-text/70">{feature.desc}</p>
             </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Stories Preview */}
+      <section className="container mx-auto px-4 py-20 bg-ink-pink/5 rounded-3xl my-20">
+        <div className="flex justify-between items-end mb-12">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-ink-text mb-2">Featured Stories</h2>
+            <p className="text-ink-text/60">Read what others are sharing</p>
+          </div>
+          <Link href="/stories">
+            <Button variant="ghost" className="text-ink-blush hover:text-ink-blush/80 hover:bg-ink-pink/10">
+              View all stories →
+            </Button>
+          </Link>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Placeholder for stories - in a real app these would be dynamic */}
+          {[1, 2, 3].map((_, i) => (
+            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-ink-pink/10 hover:border-ink-pink/30 transition-colors cursor-pointer group">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-ink-blush to-ink-purple opacity-80"></div>
+                <span className="text-sm font-medium text-ink-text/70">DreamWriter{i + 1}</span>
+              </div>
+              <h3 className="text-lg font-bold text-ink-text mb-2 group-hover:text-ink-blush transition-colors">The day the stars fell</h3>
+              <p className="text-ink-text/60 text-sm line-clamp-3 mb-4">
+                It started as a normal Tuesday evening, but then I looked up at the sky and saw something specific...
+              </p>
+              <div className="flex items-center gap-4 text-xs text-ink-text/40">
+                <span>5 min read</span>
+                <span>•</span>
+                <span>Just now</span>
+              </div>
+            </div>
           ))}
         </div>
       </section>
