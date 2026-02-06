@@ -10,10 +10,10 @@ const config: Config = {
         extend: {
             colors: {
                 ink: {
-                    pink: "#F7C1D9",
-                    blush: "#E88DB3",
-                    purple: "#B39DDB",
-                    neutral: "#FFF8FB",
+                    pink: "#F4A5C7", // Slightly deeper than F7C1D9
+                    blush: "#E06C9F", // More vibrant than E88DB3
+                    purple: "#9F85D8", // Slightly deeper than B39DDB
+                    neutral: "#FFF5F9", // Slightly warmer/pinker white
                     text: "#2B2B2B",
                 },
                 border: "hsl(var(--border))",
@@ -58,7 +58,7 @@ const config: Config = {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-                "soft-gradient": "linear-gradient(135deg, #FFF8FB 0%, #F7C1D9 100%)",
+                "soft-gradient": "linear-gradient(135deg, #FFF5F9 0%, #F4A5C7 100%)",
             },
         },
     },
