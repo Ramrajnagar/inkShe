@@ -15,8 +15,6 @@ export default function Home() {
   const [featuredStories, setFeaturedStories] = useState<any[]>([]);
   const ref = useRef(null);
 
-  import { useState, useEffect } from "react";
-
   useEffect(() => {
     async function fetchFeatured() {
       try {
@@ -31,6 +29,7 @@ export default function Home() {
     }
     fetchFeatured();
   }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -246,7 +245,6 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Placeholder for stories - in a real app these would be dynamic */}
           {featuredStories.length > 0 ? featuredStories.map((story, i) => (
             <Link href={`/stories/${story.slug}`} key={i}>
               <div className="bg-white p-6 rounded-2xl shadow-sm border border-ink-pink/10 hover:border-ink-pink/30 transition-colors cursor-pointer group h-full flex flex-col">
