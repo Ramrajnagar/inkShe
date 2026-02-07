@@ -50,4 +50,36 @@ export async function POST(req: Request) {
             { status: 500 }
         );
     }
-}
+    export async function GET(req: Request) {
+        try {
+            const { searchParams } = new URL(req.url);
+            const limit = parseInt(searchParams.get("limit") || "10");
+            const featured = searchParams.get("featured") === "true";
+
+            const stories = await db.post.findMany({
+                where: {
+                    published: true,
+                    // Add featured logic if we had a featured flag, for now just latest
+                },
+                take: limit,
+                orderBy: {
+                    createdAt: "desc",
+                },
+                include: {
+                    author: {
+                        select: {
+                            penName: true,
+                        }
+                    }
+                }
+            });
+
+            return NextResponse.json({ stories });
+        } catch (error) {
+            console.error("Fetch stories error:", error);
+            return NextResponse.json(
+                { error: "Failed to fetch stories" },
+                { status: 500 }
+            );
+        }
+    }
