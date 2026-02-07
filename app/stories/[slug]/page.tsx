@@ -35,8 +35,8 @@ const MOCK_POST = {
     tags: ["Personal Growth", "Writing", "Inspiration"]
 };
 
-export default async function StoryPage({ params }: { params: { slug: string } }) {
-    const { slug } = params;
+export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
 
     let post = null;
 
