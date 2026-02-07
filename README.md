@@ -5,7 +5,7 @@
 
 > **"Your words. Your freedom."**
 
-Hey there! 👋 I'm [Ramraj](https://github.com/yourusername), the creator of **InkShe**.
+Hey there! 👋 I'm [Ramraj](https://github.com/Ramrajnagar), the creator of **InkShe**.
 
 I built InkShe because I noticed something missing on the internet: a truly safe, cozy, and private place for women and girls to just *write*. Social media is loud, judgmental, and permanent. I wanted to build the opposite—a digital sanctuary where you can scream into the void, share a poem, or document your day without worrying about likes, algorithms, or trolls.
 
