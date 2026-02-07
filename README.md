@@ -1,7 +1,7 @@
 # InkShe
 
 ![InkShe Banner](https://via.placeholder.com/1200x400?text=InkShe+Banner) 
-*(Replace this with a real screenshot of the app - it makes a huge difference)*
+
 
 > **"Your words. Your freedom."**
 
