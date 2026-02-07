@@ -55,9 +55,15 @@ export default function SettingsPage() {
     };
 
     const handleLogout = async () => {
-        document.cookie = "token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-        router.push("/login");
-        router.refresh();
+        try {
+            await fetch("/api/auth/logout", { method: "POST" });
+            router.push("/login");
+            router.refresh();
+        } catch (error) {
+            console.error("Logout failed:", error);
+            // Fallback
+            router.push("/login");
+        }
     };
 
     return (

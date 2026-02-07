@@ -39,8 +39,8 @@ export default function WritePage() {
                 alert(error.error || "Failed to publish story");
             }
         } catch (error) {
-            console.error(error);
-            alert("Something went wrong");
+            console.error("Publish error:", error);
+            alert("An unexpected error occurred while publishing. Please try again.");
         } finally {
             setIsLoading(false);
         }
