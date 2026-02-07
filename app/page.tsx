@@ -9,10 +9,28 @@ import { Heart, Sparkles, PenTool, Lock, Users } from "lucide-react";
 import { SketchUnderline, SketchSparkle, SketchArrow, SketchCircle } from "@/components/ui/sketch-decorations";
 import { HeroBackground } from "@/components/landing/hero-background";
 import { RunningText } from "@/components/landing/running-text";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Home() {
+  const [featuredStories, setFeaturedStories] = useState<any[]>([]);
   const ref = useRef(null);
+
+  import { useState, useEffect } from "react";
+
+  useEffect(() => {
+    async function fetchFeatured() {
+      try {
+        const res = await fetch("/api/stories?limit=3");
+        if (res.ok) {
+          const data = await res.json();
+          setFeaturedStories(data.stories);
+        }
+      } catch (e) {
+        console.error("Failed to fetch featured stories");
+      }
+    }
+    fetchFeatured();
+  }, []);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -229,23 +247,34 @@ export default function Home() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Placeholder for stories - in a real app these would be dynamic */}
-          {[1, 2, 3].map((_, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-ink-pink/10 hover:border-ink-pink/30 transition-colors cursor-pointer group">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-ink-blush to-ink-purple opacity-80"></div>
-                <span className="text-sm font-medium text-ink-text/70">DreamWriter{i + 1}</span>
+          {featuredStories.length > 0 ? featuredStories.map((story, i) => (
+            <Link href={`/stories/${story.slug}`} key={i}>
+              <div className="bg-white p-6 rounded-2xl shadow-sm border border-ink-pink/10 hover:border-ink-pink/30 transition-colors cursor-pointer group h-full flex flex-col">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-ink-blush to-ink-purple opacity-80 flex items-center justify-center text-white font-bold text-xs">{story.author?.penName?.[0] || "A"}</div>
+                  <span className="text-sm font-medium text-ink-text/70">{story.author?.penName || "Anonymous"}</span>
+                </div>
+                <h3 className="text-lg font-bold text-ink-text mb-2 group-hover:text-ink-blush transition-colors line-clamp-2">{story.title}</h3>
+                <p className="text-ink-text/60 text-sm line-clamp-3 mb-4 flex-grow">
+                  {story.content?.substring(0, 100)}...
+                </p>
+                <div className="flex items-center gap-4 text-xs text-ink-text/40 mt-auto">
+                  <span>5 min read</span>
+                  <span>•</span>
+                  <span>{new Date(story.createdAt).toLocaleDateString()}</span>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-ink-text mb-2 group-hover:text-ink-blush transition-colors">The day the stars fell</h3>
-              <p className="text-ink-text/60 text-sm line-clamp-3 mb-4">
-                It started as a normal Tuesday evening, but then I looked up at the sky and saw something specific...
-              </p>
-              <div className="flex items-center gap-4 text-xs text-ink-text/40">
-                <span>5 min read</span>
-                <span>•</span>
-                <span>Just now</span>
+            </Link>
+          )) : (
+            // Fallback skelton or empty state if no stories
+            [1, 2, 3].map((_, i) => (
+              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-ink-pink/10 opacity-50">
+                <div className="h-8 w-24 bg-gray-100 rounded-full mb-4"></div>
+                <div className="h-6 w-3/4 bg-gray-100 rounded mb-2"></div>
+                <div className="h-20 w-full bg-gray-100 rounded"></div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </section>
 
