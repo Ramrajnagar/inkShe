@@ -6,7 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Heart, Sparkles, PenTool, Lock, Users } from "lucide-react";
-import { SketchUnderline, SketchSparkle, SketchArrow } from "@/components/ui/sketch-decorations";
+import { SketchUnderline, SketchSparkle, SketchArrow, SketchCircle } from "@/components/ui/sketch-decorations";
 import { HeroBackground } from "@/components/landing/hero-background";
 import { RunningText } from "@/components/landing/running-text";
 import { useRef } from "react";
@@ -247,6 +247,109 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* Community/Testimonials Section */}
+      <section className="container mx-auto px-4 py-24 relative overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-1/2 left-0 w-64 h-64 bg-ink-pink/20 rounded-full blur-[100px] -z-10" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-ink-purple/10 rounded-full blur-[120px] -z-10" />
+
+        <div className="text-center mb-16 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center justify-center p-2 px-4 bg-white/50 backdrop-blur-sm rounded-full border border-ink-pink/20 text-ink-blush font-medium text-sm mb-4"
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Join 2,000+ Writers
+          </motion.div>
+
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-ink-text relative inline-block">
+            Loved solely by <span className="text-ink-blush">Girls</span>
+            <SketchUnderline className="absolute -bottom-2 left-0 w-full text-ink-pink/40 h-4" />
+          </h2>
+          <p className="text-xl text-ink-text/60 max-w-2xl mx-auto">
+            A community where empathy leads and judgment is left at the door.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              quote: "I finally found a place where I don't have to pretend. Writing here feels like exhaling after holding my breath for years.",
+              author: "Sarah J.",
+              role: "Poet",
+              color: "bg-ink-pink/10"
+            },
+            {
+              quote: "The anonymity gave me the courage to share my story. The support I received changed my life.",
+              author: "Maya R.",
+              role: "Student",
+              color: "bg-ink-purple/10"
+            },
+            {
+              quote: "It's not just a writing app; it's a sisterhood. I've never felt so understood by strangers.",
+              author: "Priya K.",
+              role: "Developer",
+              color: "bg-ink-blush/10"
+            }
+          ].map((testimonial, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.2 }}
+              className="relative p-8 rounded-3xl bg-white/40 backdrop-blur-md border border-white/60 shadow-lg hover:shadow-xl hover:shadow-ink-pink/10 transition-all duration-300 group"
+            >
+              <div className="absolute -top-4 -left-4">
+                <div className={`w-12 h-12 ${testimonial.color} rounded-2xl rotate-12 flex items-center justify-center text-4xl font-serif text-ink-text/40`}>
+                  "
+                </div>
+              </div>
+
+              <p className="text-lg text-ink-text/80 italic mb-6 relative z-10 leading-relaxed">
+                "{testimonial.quote}"
+              </p>
+
+              <div className="flex items-center gap-4 border-t border-ink-pink/10 pt-6">
+                <div className={`w-10 h-10 rounded-full ${testimonial.color} flex items-center justify-center font-bold text-ink-text/60`}>
+                  {testimonial.author[0]}
+                </div>
+                <div>
+                  <h4 className="font-bold text-ink-text group-hover:text-ink-blush transition-colors">{testimonial.author}</h4>
+                  <p className="text-sm text-ink-text/50">{testimonial.role}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Call to Action Wrapper */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mt-20 p-12 rounded-[3rem] bg-gradient-to-br from-ink-blush to-ink-purple text-white text-center relative overflow-hidden shadow-2xl shadow-ink-pink/30"
+        >
+          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
+          <SketchCircle className="absolute -top-20 -left-20 w-64 h-64 text-white/10" />
+          <SketchCircle className="absolute -bottom-40 -right-20 w-96 h-96 text-white/10" />
+
+          <div className="relative z-10 space-y-8">
+            <h3 className="text-3xl md:text-5xl font-heading font-black">Ready to share your story?</h3>
+            <p className="text-white/80 text-xl max-w-xl mx-auto">
+              Join thousands of girls finding their voice today.
+            </p>
+            <Link href="/signup">
+              <Button size="lg" className="h-16 px-10 text-lg bg-white text-ink-blush hover:bg-white/90 font-bold rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                Start Writing for Free
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
       </section>
 
       <Footer />
