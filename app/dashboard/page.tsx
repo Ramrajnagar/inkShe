@@ -56,6 +56,12 @@ export default function DashboardPage() {
                         Write New Story
                     </Button>
                 </Link>
+                <Link href="/">
+                    <Button variant="ghost" size="lg" className="bg-white/50 border-ink-pink/30 hover:bg-white text-ink-text/80">
+                        <Globe className="mr-2 h-5 w-5 text-ink-blush" />
+                        Visit Home
+                    </Button>
+                </Link>
                 <Link href="/settings">
                     <Button variant="outline" size="lg" className="bg-white/50 border-ink-pink/30 hover:bg-white text-ink-text/80">
                         Profile Settings

@@ -5,10 +5,10 @@ import { getSession } from "@/lib/auth";
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
         const { id } = await params;
-        const session = await getSession();
+        const session = await getSession() as any;
 
-        if (!session || typeof session === "string" || !session.userId) {
-            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        if (!session || !session.userId) {
+            return NextResponse.json({ error: "Unauthorized - Please login to comment" }, { status: 401 });
         }
 
         const body = await req.json();
@@ -29,10 +29,24 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
             });
         }
 
+        // Robust story lookup by ID or Slug
+        const story = await db.post.findFirst({
+            where: {
+                OR: [
+                    { id: id },
+                    { slug: id }
+                ]
+            }
+        });
+
+        if (!story) {
+            return NextResponse.json({ error: "Story not found" }, { status: 404 });
+        }
+
         const comment = await db.comment.create({
             data: {
                 content: content.trim(),
-                postId: id,
+                postId: story.id,
                 authorId: session.userId,
             },
             include: { author: true }
