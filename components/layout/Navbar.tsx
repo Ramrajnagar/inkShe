@@ -27,33 +27,67 @@ export function Navbar() {
     const user = sessionData?.user;
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300 will-change-transform">
+        <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md md:backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300 will-change-transform">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex h-20 items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <Link href="/" className="flex items-center gap-3 group relative">
-                            {/* Holi Splash Effect behind logo */}
-                            <motion.div
-                                className="absolute -inset-2 bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-500 rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity"
-                                animate={{
-                                    scale: [1, 1.2, 1],
-                                    rotate: [0, 90, 0]
-                                }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                            />
+                        <Link href="/" className="flex items-center gap-2 md:gap-3 group relative shrink-0">
+                            <div className="relative">
+                                {/* Enhanced Holi Splash Background */}
+                                <motion.div
+                                    className="absolute -inset-2 md:-inset-3 bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-500 rounded-full blur-xl opacity-20 group-hover:opacity-60 transition-opacity"
+                                    animate={{
+                                        scale: [1, 1.15, 1],
+                                        rotate: [0, 180, 0]
+                                    }}
+                                    transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                                />
 
-                            <div className="relative bg-gradient-to-br from-ink-blush via-ink-purple to-pink-600 p-2.5 rounded-2xl text-white shadow-[0_8px_30px_rgb(236,72,153,0.3)] group-hover:shadow-[0_8px_30px_rgb(236,72,153,0.5)] group-hover:-rotate-6 transition-all duration-500">
-                                <PenTool className="h-6 w-6 fill-current" />
+                                {/* Main Logo Icon with "Paint" effects */}
+                                <div className="relative bg-gradient-to-br from-ink-blush via-ink-purple to-pink-600 p-2 md:p-2.5 rounded-xl md:rounded-2xl text-white shadow-[0_8px_30px_rgb(236,72,153,0.3)] group-hover:shadow-[0_8px_30px_rgb(236,72,153,0.6)] group-hover:-rotate-6 transition-all duration-500 overflow-hidden">
+                                    <PenTool className="h-5 w-5 md:h-6 md:w-6 fill-current relative z-10" />
+
+                                    {/* SVG Paint Splash texture overlay */}
+                                    <svg className="absolute inset-0 w-full h-full opacity-30 mix-blend-overlay pointer-events-none" viewBox="0 0 100 100">
+                                        <circle cx="20" cy="20" r="15" fill="white" />
+                                        <circle cx="80" cy="80" r="20" fill="white" />
+                                        <circle cx="70" cy="15" r="10" fill="white" />
+                                    </svg>
+                                </div>
+
+                                {/* Realistic Paint Drips from the logo icon box */}
+                                <div className="absolute -bottom-3 left-0 w-full flex justify-around px-1 pointer-events-none opacity-60">
+                                    {[...Array(3)].map((_, i) => (
+                                        <motion.div
+                                            key={i}
+                                            className="w-1 md:w-1.5 rounded-full"
+                                            style={{
+                                                height: 0,
+                                                backgroundColor: ["#F59E0B", "#EF4444", "#8B5CF6"][i],
+                                                background: `linear-gradient(to bottom, ${["#F59E0B", "#EF4444", "#8B5CF6"][i]}, transparent)`
+                                            }}
+                                            animate={{
+                                                height: [0, 12, 0],
+                                                y: [0, 4, 0]
+                                            }}
+                                            transition={{
+                                                duration: 2.5 + i,
+                                                repeat: Infinity,
+                                                delay: i * 0.7
+                                            }}
+                                        />
+                                    ))}
+                                </div>
                             </div>
 
                             <div className="flex flex-col">
-                                <span className="text-3xl font-heading font-black tracking-tight text-ink-text group-hover:text-ink-blush transition-colors drop-shadow-sm">
+                                <span className="text-2xl md:text-3xl font-heading font-black tracking-tight text-ink-text group-hover:text-ink-blush transition-colors drop-shadow-sm leading-tight md:leading-none">
                                     InkShe
                                 </span>
                                 <motion.span
-                                    initial={{ opacity: 0, y: -5 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="text-[10px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 uppercase tracking-[0.2em] -mt-1"
+                                    initial={{ opacity: 0, x: -5 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="text-[8px] md:text-[10px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 uppercase tracking-[0.2em] -mt-0.5 md:mt-0"
                                 >
                                     Creative Safe Space
                                 </motion.span>

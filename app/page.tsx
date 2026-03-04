@@ -104,15 +104,19 @@ export default function Home() {
             className="max-w-4xl space-y-8 relative"
           >
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{
-                boxShadow: ["0 0 0px #F472B6", "0 0 20px #F472B6", "0 0 0px #F472B6"]
+                scale: [0.9, 1.05, 1],
+                opacity: 1,
+                boxShadow: ["0 0 10px rgba(244,114,182,0.1)", "0 0 25px rgba(244,114,182,0.4)", "0 0 10px rgba(244,114,182,0.1)"]
               }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-orange-100 via-pink-100 to-purple-100 border border-pink-300 text-pink-600 font-bold shadow-sm mb-6 cursor-default"
+              transition={{ duration: 3, repeat: Infinity }}
+              className="inline-flex items-center gap-2 px-4 md:px-6 py-1.5 md:py-2 rounded-full bg-gradient-to-r from-orange-100 via-pink-100 to-purple-100 border border-pink-200 text-pink-600 font-bold shadow-sm mb-4 md:mb-6 cursor-default relative overflow-hidden"
             >
-              <Sparkles className="w-4 h-4 text-orange-400" />
-              <span>Holi Limited Edition: Your Creative Festival ✨</span>
+              <div className="absolute -left-2 -top-2 w-8 h-8 bg-yellow-400 opacity-20 blur-lg rounded-full" />
+              <div className="absolute -right-2 -bottom-2 w-8 h-8 bg-purple-400 opacity-20 blur-lg rounded-full" />
+              <Sparkles className="w-3.5 h-3.5 md:w-5 md:h-5 text-orange-400" />
+              <span className="text-[10px] md:text-sm uppercase tracking-wider">Holi Limited Edition ✨</span>
             </motion.div>
 
             <h1 className="text-6xl md:text-8xl font-heading font-bold text-ink-text leading-[1.1] tracking-tight">
