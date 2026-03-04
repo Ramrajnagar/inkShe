@@ -14,13 +14,16 @@ interface Splash {
 
 export function HoliColorThrower() {
     const [splashes, setSplashes] = useState<Splash[]>([]);
+    const [showHint, setShowHint] = useState(true);
     const colors = ["#F59E0B", "#EF4444", "#EC4899", "#8B5CF6", "#10B981", "#3B82F6"];
 
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
             // Don't splash if clicking on buttons or links
             const target = e.target as HTMLElement;
-            if (target.closest('button') || target.closest('a') || target.closest('input')) return;
+            if (target.closest('button') || target.closest('a') || target.closest('input') || target.closest('textarea')) return;
+
+            if (showHint) setShowHint(false); // Hide hint after first click
 
             const newSplash: Splash = {
                 id: Date.now(),
@@ -41,10 +44,46 @@ export function HoliColorThrower() {
 
         window.addEventListener('mousedown', handleClick);
         return () => window.removeEventListener('mousedown', handleClick);
-    }, []);
+    }, [showHint]);
 
     return (
         <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden">
+            {/* Hint UI */}
+            <AnimatePresence>
+                {showHint && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, scale: 0.8 }}
+                        animate={{
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            boxShadow: ["0 0 0px #F472B6", "0 0 20px #F472B6", "0 0 0px #F472B6"]
+                        }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{
+                            delay: 2,
+                            duration: 0.8,
+                            boxShadow: { duration: 2, repeat: Infinity }
+                        }}
+                        className="fixed bottom-24 right-8 bg-white/80 backdrop-blur-md border-2 border-pink-400 px-6 py-3 rounded-2xl pointer-events-auto cursor-default shadow-xl z-[200]"
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className="text-2xl animate-bounce">🎨</span>
+                            <div className="flex flex-col">
+                                <span className="text-sm font-black text-pink-600 uppercase tracking-tight">Holi Celebration Mode</span>
+                                <span className="text-xs text-ink-text/70 font-bold">Try clicking the background to throw colors!</span>
+                            </div>
+                            <button
+                                onClick={() => setShowHint(false)}
+                                className="ml-2 text-ink-text/30 hover:text-ink-text/60 transition-colors"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            {/* Splashes */}
             <AnimatePresence>
                 {splashes.map((splash) => (
                     <motion.div
