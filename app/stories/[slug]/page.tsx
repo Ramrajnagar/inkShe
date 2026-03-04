@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart, MessageCircle, Share2, MoreHorizontal, Calendar } from "lucide-react";
-import { CommentSection } from "@/components/features/CommentSection";
+import { LiveInteractions } from "@/components/features/LiveInteractions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
@@ -135,27 +135,8 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
-                {/* Interaction Bar */}
-                <div className="mt-12 flex items-center justify-between bg-white/50 backdrop-blur-sm border border-ink-pink/20 rounded-full px-6 py-3 shadow-sm sticky bottom-8">
-                    <div className="flex items-center gap-6">
-                        <Button variant="ghost" className="flex items-center gap-2 hover:bg-transparent hover:text-ink-blush p-0">
-                            <Heart className="w-6 h-6" />
-                            <span className="font-medium">{post.stats.likes}</span>
-                        </Button>
-                        <Button variant="ghost" className="flex items-center gap-2 hover:bg-transparent hover:text-ink-blush p-0">
-                            <MessageCircle className="w-6 h-6" />
-                            <span className="font-medium">{post.stats.comments}</span>
-                        </Button>
-                    </div>
-                    <Button variant="ghost" size="icon">
-                        <Share2 className="w-5 h-5" />
-                    </Button>
-                </div>
-
-                {/* Comments Section */}
-                <section id="comments" className="mt-16 border-t border-ink-pink/20 pt-8">
-                    <CommentSection />
-                </section>
+                {/* Live Interactions (Likes & Comments) */}
+                <LiveInteractions postId={slug} />
             </article>
 
             <Footer />

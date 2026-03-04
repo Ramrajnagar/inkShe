@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Footer() {
     return (
         <footer className="border-t border-ink-pink/20 bg-ink-neutral py-8 mt-12">
@@ -6,15 +8,15 @@ export function Footer() {
                     © {new Date().getFullYear()} InkShe. All rights reserved.
                 </p>
                 <div className="flex items-center gap-6">
-                    <a href="#" className="text-sm text-ink-text/60 hover:text-ink-blush">
+                    <Link href="/privacy" className="text-sm text-ink-text/60 hover:text-ink-blush">
                         Privacy
-                    </a>
-                    <a href="#" className="text-sm text-ink-text/60 hover:text-ink-blush">
+                    </Link>
+                    <Link href="/terms" className="text-sm text-ink-text/60 hover:text-ink-blush">
                         Terms
-                    </a>
-                    <a href="#" className="text-sm text-ink-text/60 hover:text-ink-blush">
+                    </Link>
+                    <Link href="/guidelines" className="text-sm text-ink-text/60 hover:text-ink-blush">
                         Guidelines
-                    </a>
+                    </Link>
                 </div>
             </div>
         </footer>

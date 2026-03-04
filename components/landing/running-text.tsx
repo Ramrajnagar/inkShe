@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 
 export const RunningText = () => {
     const words = [
-        "Share your story ✨",
-        "Safe space for girls 💖",
-        "Write freely 📝",
+        "Share your story ",
+        "Safe space for girls ",
+        "Write freely ",
         "Read without judgment 🌸",
         "Express yourself 🦋",
-        "Your words matter 💫",
-        "Creative freedom 🎨",
-        "Supportive community 🤝",
+        "Your words matter ",
+        "Creative freedom ",
+        "Supportive community ",
     ];
 
     return (

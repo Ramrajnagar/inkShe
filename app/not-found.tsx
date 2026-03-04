@@ -13,7 +13,7 @@ export default function NotFound() {
                     Page Not Found
                 </h2>
                 <p className="text-lg text-ink-text/60 max-w-md mx-auto">
-                    Oops! It seems like this story hasn't been written yet... or maybe it's hiding?
+                    Oops! It seems like this story hasn&apos;t been written yet... or maybe it&apos;s hiding?
                     <SketchUnderline className="block mx-auto w-24 h-4 text-ink-blush/50 mt-2" />
                 </p>
                 <Link href="/">

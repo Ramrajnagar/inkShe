@@ -1,0 +1,130 @@
+﻿
+> inkshe@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+node.exe : Turbopack build 
+encountered 1 warnings:
+At C:\Program 
+Files\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE $NPM_CLI_JS 
+$args
++   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: (Turbopa  
+  ck build encountered 1 w   
+ arnings::String) [], Rem    
+oteException
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+./tailwind.config.ts:69:9
+Module not found: Can't 
+resolve 'tailwindcss-animate'
+[0m [90m 67 |[39m         
+require([32m'@tailwindcss/ty
+pography'[39m)[33m,[39m
+ [90m 68 |[39m         
+[90m// 
+eslint-disable-next-line @typ
+escript-eslint/no-require-imp
+orts[39m
+[31m[1m>[22m[39m[90m 69 
+|[39m         require([32m"
+tailwindcss-animate"[39m)
+ [90m    |[39m         [31
+m[1m^[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m[31
+m[1m^[22m[39m
+ [90m 70 |[39m     
+][33m,[39m
+ [90m 71 |[39m }[33m;[39m
+ [90m 72 |[39m 
+[36mexport[39m 
+[36mdefault[39m 
+config[33m;[39m[0m
+
+
+
+https://nextjs.org/docs/messa
+ges/module-not-found
+
+
+
+> Build error occurred
+Error: Turbopack build 
+failed with 1 errors:
+./app/globals.css
+Error evaluating Node.js code
+Error: Cannot find module 
+'tailwindcss-animate'
+Require stack:
+- D:\Mahi\tailwind.config.ts
+    [at 
+Function._resolveFilename (no
+de:internal/modules/cjs/loade
+r:1401:15)]
+    [at Function.resolve (nod
+e:internal/modules/helpers:14
+5:19)]
+    [at _resolve (D:\Mahi\nod
+e_modules\tailwindcss\node_mo
+dules\jiti\dist\jiti.js:1:246
+378)]
+    [at jiti (D:\Mahi\node_mo
+dules\tailwindcss\node_module
+s\jiti\dist\jiti.js:1:249092)
+]
+    [at D:\Mahi\tailwind.conf
+ig.ts:69:9]
+    [at evalModule (D:\Mahi\n
+ode_modules\tailwindcss\node_
+modules\jiti\dist\jiti.js:1:2
+51913)]
+    [at jiti (D:\Mahi\node_mo
+dules\tailwindcss\node_module
+s\jiti\dist\jiti.js:1:249841)
+]
+    [at D:\Mahi\node_modules\
+tailwindcss\lib\lib\load-conf
+ig.js:53:30]
+    [at loadConfig (D:\Mahi\n
+ode_modules\tailwindcss\lib\l
+ib\load-config.js:55:6)]
+    [at getTailwindConfig (D:
+\Mahi\node_modules\tailwindcs
+s\lib\lib\setupTrackingContex
+t.js:74:116)]
+
+Import trace:
+  Client Component Browser:
+    ./app/globals.css 
+[Client Component Browser]
+    ./app/layout.tsx [Server 
+Component]
+
+
+    at ignore-listed frames

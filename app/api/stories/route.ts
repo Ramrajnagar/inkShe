@@ -6,6 +6,7 @@ import { z } from "zod";
 const storySchema = z.object({
     title: z.string().min(1, "Title is required").max(100),
     content: z.string().min(1, "Content is required"),
+    published: z.boolean().optional().default(true),
 });
 
 export async function POST(req: Request) {
@@ -23,7 +24,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Invalid input" }, { status: 400 });
         }
 
-        const { title, content } = result.data;
+        const { title, content, published } = result.data;
 
         // Generate a simple slug
         const slug = title
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
                 content,
                 slug,
                 authorId: session.userId,
-                published: true, // Auto-publish for now
+                published: published,
             },
         });
 
@@ -62,6 +63,9 @@ export async function GET(req: Request) {
         const stories = await db.post.findMany({
             where: {
                 published: true,
+                category: {
+                    not: "Community",
+                },
                 // Add featured logic if we had a featured flag, for now just latest
             },
             take: limit,

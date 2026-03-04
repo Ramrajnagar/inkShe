@@ -36,6 +36,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { FeedbackButton } from "@/components/features/FeedbackButton";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.variable, playfair.variable, "antialiased min-h-screen bg-ink-neutral text-ink-text selection:bg-ink-pink selection:text-ink-text")}>
+        <FeedbackButton />
         {children}
       </body>
     </html>

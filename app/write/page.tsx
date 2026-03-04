@@ -15,7 +15,7 @@ export default function WritePage() {
     const [content, setContent] = useState("");
     const router = useRouter();
 
-    const handlePublish = async () => {
+    const handlePublish = async (isPublished: boolean) => {
         if (!title.trim() || !content.trim()) {
             alert("Please fill in both title and content.");
             return;
@@ -27,7 +27,7 @@ export default function WritePage() {
             const res = await fetch("/api/stories", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ title, content }),
+                body: JSON.stringify({ title, content, published: isPublished }),
             });
 
             if (res.ok) {
@@ -36,11 +36,11 @@ export default function WritePage() {
                 router.refresh();
             } else {
                 const error = await res.json();
-                alert(error.error || "Failed to publish story");
+                alert(error.error || "Failed to save story");
             }
         } catch (error) {
             console.error("Publish error:", error);
-            alert("An unexpected error occurred while publishing. Please try again.");
+            alert("An unexpected error occurred while saving. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -81,15 +81,25 @@ export default function WritePage() {
                             />
                         </div>
 
-                        <Button
-                            className="w-full text-lg py-6 font-bold shadow-md hover:shadow-lg transition-all"
-                            variant="premium"
-                            onClick={handlePublish}
-                            disabled={isLoading}
-                        >
-                            {isLoading ? "Publishing..." : "Publish Story"}
-                            {!isLoading && <Sparkles className="ml-2 w-5 h-5" />}
-                        </Button>
+                        <div className="flex gap-4">
+                            <Button
+                                className="w-full text-lg py-6 font-bold shadow-sm hover:shadow-md transition-all border-ink-pink text-ink-pink hover:bg-ink-pink/10"
+                                variant="outline"
+                                onClick={() => handlePublish(false)}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? "Saving..." : "Keep Private"}
+                            </Button>
+                            <Button
+                                className="w-full text-lg py-6 font-bold shadow-md hover:shadow-lg transition-all"
+                                variant="premium"
+                                onClick={() => handlePublish(true)}
+                                disabled={isLoading}
+                            >
+                                {isLoading ? "Publishing..." : "Publish Story"}
+                                {!isLoading && <Sparkles className="ml-2 w-5 h-5" />}
+                            </Button>
+                        </div>
                     </CardContent>
                 </Card>
             </div>

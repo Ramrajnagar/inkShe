@@ -1,0 +1,113 @@
+
+> inkshe@0.1.0 lint
+> eslint
+
+
+D:\Mahi\app\api\auth\logout\route.ts
+  10:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\api\community\route.ts
+  63:27  warning  'req' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\api\stories\route.ts
+  61:15  warning  'featured' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\api\user\dashboard\route.ts
+  5:27  warning  'req' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\api\user\profile\route.ts
+  10:27  warning  'req' is defined but never used    @typescript-eslint/no-unused-vars
+  27:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\dashboard\page.tsx
+   24:44  error  Error: This value cannot be modified
+
+Modifying a variable defined outside a component or hook is not allowed. Consider using an effect.
+
+D:\Mahi\app\dashboard\page.tsx:24:44
+  22 |     if (error && error.status === 401) {
+  23 |         // Simple client-side redirect fallback if session lost
+> 24 |         if (typeof window !== "undefined") window.location.href = "/login";
+     |                                            ^^^^^^^^^^^^^^^ value cannot be modified
+  25 |         return null; // Avoid rendering
+  26 |     }
+  27 |  react-hooks/immutability
+  136:60  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+
+D:\Mahi\app\dashboard\write\page.tsx
+  8:21  warning  'Save' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\guidelines\page.tsx
+  22:37  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  22:58  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  29:62  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  33:74  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Mahi\app\not-found.tsx
+  16:56  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  16:90  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Mahi\app\page.tsx
+   15:58  error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   26:16  warning  'e' is defined but never used                                    @typescript-eslint/no-unused-vars
+   38:9   warning  'y1' is assigned a value but never used                          @typescript-eslint/no-unused-vars
+   39:9   warning  'y2' is assigned a value but never used                          @typescript-eslint/no-unused-vars
+  152:71  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  336:19  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  341:17  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  341:37  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+D:\Mahi\app\settings\page.tsx
+   3:10  warning  'useTransition' is defined but never used  @typescript-eslint/no-unused-vars
+  50:18  warning  'error' is defined but never used          @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\stories\StoriesList.tsx
+  29:56  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\stories\[slug]\page.tsx
+  5:10  warning  'Heart' is defined but never used          @typescript-eslint/no-unused-vars
+  5:17  warning  'MessageCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\stories\page.tsx
+  16:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Mahi\app\terms\page.tsx
+  30:60  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+D:\Mahi\app\u\[username]\page.tsx
+   6:53  warning  'Eye' is defined but never used     @typescript-eslint/no-unused-vars
+  49:39  warning  'params' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\app\write\page.tsx
+  4:29  warning  'CardHeader' is defined but never used  @typescript-eslint/no-unused-vars
+  4:41  warning  'CardTitle' is defined but never used   @typescript-eslint/no-unused-vars
+
+D:\Mahi\components\editor\Editor.tsx
+  10:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Mahi\components\features\CommentSection.tsx
+  115:41  warning  'i' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\Mahi\components\features\LiveCommunity.tsx
+  126:44  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Mahi\components\features\LiveInteractions.tsx
+   59:18  warning  'e' is defined but never used             @typescript-eslint/no-unused-vars
+  141:63  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\Mahi\components\layout\Navbar.tsx
+  7:10  warning  'Filter' is defined but never used  @typescript-eslint/no-unused-vars
+  7:18  warning  'Heart' is defined but never used   @typescript-eslint/no-unused-vars
+
+D:\Mahi\components\ui\input.tsx
+  4:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+D:\Mahi\lib\auth.ts
+  15:36  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+D:\Mahi\tailwind.config.ts
+  66:9  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 45 problems (21 errors, 24 warnings)
+

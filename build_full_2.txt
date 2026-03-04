@@ -1,0 +1,74 @@
+﻿
+> inkshe@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 6.3s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/23) ...
+node.exe : ΓÜá metadataBase 
+property in metadata export 
+is not set for resolving 
+social open graph or twitter 
+images, using 
+"http://localhost:3000". See 
+https://nextjs.org/docs/app/a
+pi-reference/functions/genera
+te-metadata#metadatabase
+At C:\Program 
+Files\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE $NPM_CLI_JS 
+$args
++   
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: (ΓÜá met  
+  adataBas...ta#metadataba   
+ se:String) [], RemoteExc    
+eption
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+  Generating static pages using 11 workers (5/23) 
+  Generating static pages using 11 workers (11/23) 
+  Generating static pages using 11 workers (17/23) 
+Γ£ô Generating static pages using 11 workers (23/23) in 940.4ms
+  Finalizing page optimization ...
+
+Route (app)
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ Γùï /about
+Γö£ ╞Æ /api/auth/login
+Γö£ ╞Æ /api/auth/logout
+Γö£ ╞Æ /api/auth/register
+Γö£ ╞Æ /api/community
+Γö£ ╞Æ /api/stories
+Γö£ ╞Æ /api/stories/[id]/comment
+Γö£ ╞Æ /api/stories/[id]/interactions
+Γö£ ╞Æ /api/stories/[id]/like
+Γö£ ╞Æ /api/user/dashboard
+Γö£ ╞Æ /api/user/profile
+Γö£ Γùï /community
+Γö£ Γùï /dashboard
+Γö£ Γùï /dashboard/write
+Γö£ Γùï /guidelines
+Γö£ Γùï /login
+Γö£ Γùï /privacy
+Γö£ Γùï /settings
+Γö£ Γùï /signup
+Γö£ Γùï /stories
+Γö£ ╞Æ /stories/[slug]
+Γö£ Γùï /terms
+Γö£ ╞Æ /u/[username]
+Γöö Γùï /write
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+
