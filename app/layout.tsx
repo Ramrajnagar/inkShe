@@ -38,6 +38,7 @@ export const metadata: Metadata = {
 
 import { FeedbackButton } from "@/components/features/FeedbackButton";
 import { HoliSplash } from "@/components/features/HoliSplash";
+import { HoliColorThrower } from "@/components/features/HoliColorThrower";
 
 export default function RootLayout({
   children,
@@ -48,6 +49,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.variable, playfair.variable, "antialiased min-h-screen bg-ink-neutral text-ink-text selection:bg-ink-pink selection:text-ink-text")}>
         <HoliSplash />
+        <HoliColorThrower />
         <FeedbackButton />
         {children}
       </body>

@@ -27,7 +27,7 @@ export function Navbar() {
     const user = sessionData?.user;
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300">
+        <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300 will-change-transform">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex h-20 items-center justify-between">
                     <div className="flex items-center gap-4">

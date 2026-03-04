@@ -6,46 +6,45 @@ export function HoliSplash() {
     const colors = ["#F59E0B", "#EF4444", "#EC4899", "#8B5CF6", "#10B981"];
 
     return (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20">
-            {[...Array(12)].map((_, i) => (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-[0.15]">
+            {[...Array(8)].map((_, i) => (
                 <motion.div
                     key={i}
-                    className="absolute rounded-full blur-3xl"
+                    className="absolute rounded-full blur-[80px] will-change-transform"
                     style={{
-                        width: Math.random() * 300 + 100,
-                        height: Math.random() * 300 + 100,
+                        width: Math.random() * 250 + 150,
+                        height: Math.random() * 250 + 150,
                         background: colors[i % colors.length],
                         left: `${Math.random() * 100}%`,
                         top: `${Math.random() * 100}%`,
                     }}
                     animate={{
-                        x: [0, Math.random() * 100 - 50, 0],
-                        y: [0, Math.random() * 100 - 50, 0],
-                        scale: [1, 1.2, 1],
+                        x: [0, Math.random() * 60 - 30, 0],
+                        y: [0, Math.random() * 60 - 30, 0],
                     }}
                     transition={{
-                        duration: Math.random() * 10 + 5,
+                        duration: Math.random() * 15 + 10,
                         repeat: Infinity,
                         ease: "linear",
                     }}
                 />
             ))}
 
-            {/* Paint Drips */}
-            <div className="absolute top-0 left-0 w-full flex justify-around">
-                {[...Array(6)].map((_, i) => (
+            {/* Paint Drips - Simplified and fewer */}
+            <div className="absolute top-0 left-0 w-full flex justify-around opacity-40">
+                {[...Array(4)].map((_, i) => (
                     <motion.div
                         key={`drip-${i}`}
-                        className="w-4 rounded-b-full"
+                        className="w-3 rounded-b-full will-change-[height]"
                         style={{
-                            height: Math.random() * 100 + 50,
+                            height: Math.random() * 60 + 40,
                             background: `linear-gradient(to bottom, ${colors[i % colors.length]}, transparent)`,
                         }}
                         animate={{
-                            height: [50, 150, 50],
+                            height: [40, 100, 40],
                         }}
                         transition={{
-                            duration: Math.random() * 4 + 2,
+                            duration: Math.random() * 6 + 4,
                             repeat: Infinity,
                             ease: "easeInOut",
                         }}
