@@ -4,9 +4,11 @@ import { Footer } from "@/components/layout/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart, MessageCircle, Share2, MoreHorizontal, Calendar } from "lucide-react";
 import { LiveInteractions } from "@/components/features/LiveInteractions";
+import { FollowButton } from "@/components/features/FollowButton";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { getSession } from "@/lib/auth";
 
 // Mock data for display purposes
 const MOCK_POST = {
@@ -37,27 +39,42 @@ const MOCK_POST = {
 
 export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
+    const session = await getSession();
 
     let post = null;
+    let actualId = slug;
 
     try {
         if (!slug.startsWith('mock-')) {
-            const dbPost = await db.post.findUnique({
-                where: { id: slug }, // Using ID for simplicity in search page link, or slug if available
-                include: { author: true }
+            const dbPost = await db.post.update({
+                where: { slug: slug },
+                data: { views: { increment: 1 } },
+                include: {
+                    author: {
+                        include: {
+                            followers: true
+                        }
+                    }
+                }
             });
 
             if (dbPost) {
-                // Transform DB post to UI format
+                actualId = dbPost.id;
+                const isFollowing = (session && typeof session !== "string") ? dbPost.author.followers.some(f => f.followerId === session.userId) : false;
+
                 post = {
+                    id: dbPost.id,
                     title: dbPost.title,
                     content: dbPost.content,
+                    views: dbPost.views,
                     author: {
+                        id: dbPost.authorId,
                         name: dbPost.author.fullName || dbPost.author.penName || "Anonymous",
                         handle: "@" + (dbPost.author.penName || "writer"),
                         bio: dbPost.author.bio || "Just another dreamer.",
                         image: dbPost.author.avatarUrl || "/placeholder-avatar.jpg",
-                        penName: dbPost.author.penName
+                        penName: dbPost.author.penName,
+                        isFollowing
                     },
                     publishedAt: new Date(dbPost.createdAt).toLocaleDateString(),
                     stats: { likes: 0, comments: 0 },
@@ -72,17 +89,12 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
     // Fallback to mock if not found in DB (or if it's a mock slug)
     if (!post) {
         if (slug.startsWith('mock-')) {
-            // Logic to return slightly different mocks based on ID could go here
-            post = MOCK_POST;
-            if (slug.includes('2')) post = { ...MOCK_POST, title: "My Journey into Tech" };
+            post = { ...MOCK_POST, id: slug, views: 1024, author: { ...MOCK_POST.author, id: "mock-author", isFollowing: false } };
+            if (slug.includes('2')) post.title = "My Journey into Tech";
         } else {
-            // If legitimate DB fetch failed and it's not a mock slug, maybe mock it for now to avoid 404 for the user demo?
-            // Or better, stick to MOCK_POST as default for any unknown slug to keep the site "working" visually
-            post = MOCK_POST;
+            post = { ...MOCK_POST, id: slug, views: 1024, author: { ...MOCK_POST.author, id: "mock-author", isFollowing: false } };
         }
     }
-
-    if (!post) return notFound();
 
     return (
         <main className="min-h-screen bg-ink-neutral">
@@ -91,13 +103,19 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
             <article className="container mx-auto px-4 md:px-6 py-12 max-w-3xl">
                 {/* Header */}
                 <header className="mb-8 space-y-6">
-                    <div className="flex items-center gap-3 text-sm text-ink-text/60">
-                        <span className="bg-ink-pink/20 text-ink-blush px-3 py-1 rounded-full font-medium">
-                            {post.tags[0]}
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <Calendar className="w-3 h-3" /> {post.publishedAt}
-                        </span>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 text-sm text-ink-text/60">
+                            <span className="bg-ink-pink/20 text-ink-blush px-3 py-1 rounded-full font-medium">
+                                {post.tags[0]}
+                            </span>
+                            <span className="flex items-center gap-1">
+                                <Calendar className="w-3 h-3" /> {post.publishedAt}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-ink-text/40 text-xs font-medium bg-white/50 px-3 py-1 rounded-full border border-ink-pink/10">
+                            <Heart className="w-3 h-3 fill-ink-pink text-ink-pink animate-pulse" />
+                            <span>{Math.floor(Math.random() * 10) + 2} Live Now</span>
+                        </div>
                     </div>
 
                     <h1 className="text-4xl md:text-5xl font-heading font-bold text-ink-text leading-tight">
@@ -110,33 +128,47 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
                                 <AvatarImage src={post.author.image} />
                                 <AvatarFallback>{post.author.name[0]}</AvatarFallback>
                             </Avatar>
-                            <div>
-                                <Link href={`/u/${post.author.handle.replace('@', '')}`} className="font-bold text-ink-text hover:text-ink-blush transition-colors cursor-pointer">
-                                    {post.author.name}
-                                </Link>
-                                <p className="text-xs text-ink-text/60">{post.author.handle}</p>
+                            <div className="flex flex-col text-left">
+                                <div className="flex items-center gap-2">
+                                    <Link href={`/u/${post.author.handle.replace('@', '')}`} className="font-bold text-ink-text hover:text-ink-blush transition-colors cursor-pointer">
+                                        {post.author.name}
+                                    </Link>
+                                    {session && typeof session !== "string" && session.userId !== post.author.id && (
+                                        <FollowButton
+                                            followingId={post.author.id}
+                                            initialIsFollowing={post.author.isFollowing}
+                                        />
+                                    )}
+                                </div>
+                                <p className="text-xs text-ink-text/60 text-left">{post.author.handle}</p>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="icon" className="hover:bg-ink-pink/10 hover:text-ink-blush">
-                                <Share2 className="w-4 h-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="hover:bg-ink-pink/10 hover:text-ink-blush">
-                                <MoreHorizontal className="w-4 h-4" />
-                            </Button>
+                        <div className="flex items-center gap-4">
+                            <div className="hidden md:flex flex-col items-end px-4 border-r border-ink-pink/10">
+                                <span className="text-2xl font-bold text-ink-text">{(post.views || 0).toLocaleString()}</span>
+                                <span className="text-[10px] text-ink-text/40 uppercase tracking-widest font-bold">Total Views</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Button variant="ghost" size="icon" className="hover:bg-ink-pink/10 hover:text-ink-blush">
+                                    <Share2 className="w-4 h-4" />
+                                </Button>
+                                <Button variant="ghost" size="icon" className="hover:bg-ink-pink/10 hover:text-ink-blush">
+                                    <MoreHorizontal className="w-4 h-4" />
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </header>
 
                 {/* Content */}
                 <div
-                    className="prose prose-lg prose-pink max-w-none font-body text-ink-text/90 leading-loose"
+                    className="prose prose-lg prose-pink max-w-none font-body text-ink-text/90 leading-loose text-left"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
                 {/* Live Interactions (Likes & Comments) */}
-                <LiveInteractions postId={slug} />
+                <LiveInteractions postId={actualId} />
             </article>
 
             <Footer />

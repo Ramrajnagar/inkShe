@@ -2,7 +2,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Heart, Eye, PenTool, Sparkles, Plus, MessageCircle, Lock, Globe } from "lucide-react";
+import { FileText, Heart, Eye, PenTool, Sparkles, Plus, MessageCircle, Lock, Globe, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SketchUnderline, SketchSparkle } from "@/components/ui/sketch-decorations";
@@ -64,7 +64,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Live Stats Grid */}
-            <div className="grid gap-6 md:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-5">
                 <Card className="border-ink-pink/20 bg-white/60 backdrop-blur-sm hover:shadow-lg hover:shadow-ink-pink/10 transition-all duration-300 group">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium text-muted-foreground">Total Views</CardTitle>
@@ -82,16 +82,31 @@ export default function DashboardPage() {
 
                 <Card className="border-ink-pink/20 bg-white/60 backdrop-blur-sm hover:shadow-lg hover:shadow-ink-pink/10 transition-all duration-300 group">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-muted-foreground">Total Likes</CardTitle>
+                        <CardTitle className="text-sm font-medium text-muted-foreground">Followers</CardTitle>
                         <div className="p-2 bg-ink-purple/10 rounded-full group-hover:bg-ink-purple/20 transition-colors">
-                            <Heart className="h-4 w-4 text-ink-purple" />
+                            <Users className="h-4 w-4 text-ink-purple" />
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-3xl font-bold text-ink-text">
+                            {isLoading ? "..." : (stats.followers || 0).toLocaleString()}
+                        </div>
+                        <p className="text-xs text-ink-purple font-medium mt-1">Growing community</p>
+                    </CardContent>
+                </Card>
+
+                <Card className="border-ink-pink/20 bg-white/60 backdrop-blur-sm hover:shadow-lg hover:shadow-ink-pink/10 transition-all duration-300 group">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium text-muted-foreground">Total Likes</CardTitle>
+                        <div className="p-2 bg-red-100 rounded-full group-hover:bg-red-200 transition-colors">
+                            <Heart className="h-4 w-4 text-red-500" />
                         </div>
                     </CardHeader>
                     <CardContent>
                         <div className="text-3xl font-bold text-ink-text">
                             {isLoading ? "..." : stats.likes.toLocaleString()}
                         </div>
-                        <p className="text-xs text-ink-purple font-medium mt-1">+{stats.likesGrowth} this month</p>
+                        <p className="text-xs text-red-500 font-medium mt-1">+{stats.likesGrowth} this month</p>
                     </CardContent>
                 </Card>
 
@@ -106,7 +121,7 @@ export default function DashboardPage() {
                         <div className="text-3xl font-bold text-ink-text">
                             {isLoading ? "..." : stats.comments.toLocaleString()}
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">Join the conversation</p>
+                        <p className="text-xs text-muted-foreground mt-1">Active safe space</p>
                     </CardContent>
                 </Card>
 

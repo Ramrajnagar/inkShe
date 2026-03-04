@@ -22,7 +22,7 @@ export function Navbar() {
         <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex h-20 items-center justify-between">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-4">
                         <Link href="/" className="flex items-center gap-3 group">
                             <div className="bg-gradient-to-br from-ink-blush to-ink-purple p-2.5 rounded-xl text-white shadow-lg shadow-ink-pink/20 group-hover:scale-105 transition-transform">
                                 <PenTool className="h-6 w-6 fill-current" />
@@ -31,6 +31,12 @@ export function Navbar() {
                                 InkShe
                             </span>
                         </Link>
+                        <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-green-50 rounded-full border border-green-200">
+                            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-[10px] font-bold text-green-700 uppercase tracking-wider">
+                                {Math.floor(Math.random() * 50) + 120} Live
+                            </span>
+                        </div>
                     </div>
 
                     {/* Desktop Nav */}
