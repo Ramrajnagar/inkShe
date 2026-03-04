@@ -2,13 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Link as LinkIcon, Calendar, Heart, Eye, MessageCircle, Sparkles } from "lucide-react";
+import { MapPin, Calendar, Sparkles } from "lucide-react";
 import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
 import { FollowButton } from "@/components/features/FollowButton";
+import { MessageButton } from "@/components/features/MessageButton";
+import { ProfileTabs } from "@/components/features/ProfileTabs";
 
 export default async function ProfilePage({ params }: { params: Promise<{ username: string }> }) {
     const { username } = await params;
@@ -23,6 +24,15 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                 include: {
                     _count: { select: { likes: true, comments: true } }
                 }
+            },
+            likes: {
+                include: {
+                    post: {
+                        include: { author: true }
+                    }
+                },
+                orderBy: { createdAt: 'desc' },
+                take: 10
             },
             _count: {
                 select: { followers: true, following: true, posts: true } as any
@@ -60,6 +70,14 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             comments: p._count.comments,
             readTime: Math.ceil(p.content.split(' ').length / 200) + " min read",
             slug: p.slug
+        })),
+        likedPosts: dbUser.likes.map((l: any) => ({
+            id: l.post.id,
+            title: l.post.title,
+            excerpt: l.post.excerpt || (l.post.content.substring(0, 100) + "..."),
+            authorName: l.post.author.fullName || l.post.author.penName || "Writer",
+            slug: l.post.slug,
+            date: new Date(l.post.createdAt).toLocaleDateString(),
         }))
     };
 
@@ -68,54 +86,59 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
             <Navbar />
 
             {/* Profile Header */}
-            <div className="bg-gradient-to-b from-ink-pink/20 to-transparent pb-12 pt-12">
-                <div className="container mx-auto px-4 md:px-6">
+            <div className="bg-gradient-to-b from-ink-pink/20 to-transparent pb-12 pt-12 relative overflow-hidden">
+                <div className="container mx-auto px-4 md:px-6 relative z-10">
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                        <Avatar className="w-32 h-32 border-4 border-white shadow-lg">
-                            <AvatarImage src={dbUser.avatarUrl || "/placeholder-avatar.jpg"} />
-                            <AvatarFallback className="text-4xl bg-ink-pink text-ink-text">{user.name[0]}</AvatarFallback>
+                        <Avatar className="w-40 h-40 border-[6px] border-white shadow-2xl rounded-[40px]">
+                            <AvatarImage src={dbUser.avatarUrl || "/placeholder-avatar.jpg"} className="object-cover" />
+                            <AvatarFallback className="text-5xl bg-ink-pink text-ink-text">{user.name[0]}</AvatarFallback>
                         </Avatar>
 
                         <div className="flex-1 text-center md:text-left space-y-4">
-                            <div>
-                                <h1 className="text-3xl font-heading font-bold text-ink-text">{user.name}</h1>
-                                <p className="text-ink-text/60 font-medium">{user.handle}</p>
+                            <div className="space-y-1">
+                                <h1 className="text-4xl md:text-5xl font-heading font-black text-ink-text tracking-tight">{user.name}</h1>
+                                <p className="text-ink-blush font-extrabold text-lg flex items-center justify-center md:justify-start gap-2">
+                                    {user.handle}
+                                    <Sparkles className="w-4 h-4" />
+                                </p>
                             </div>
 
-                            <p className="text-lg max-w-xl text-ink-text/80 leading-relaxed">
+                            <p className="text-xl max-w-2xl text-ink-text/80 leading-relaxed font-body">
                                 {user.bio}
                             </p>
 
-                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-ink-text/60">
-                                <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {user.location}</span>
-                                <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> Joined {user.joined}</span>
+                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 text-sm text-ink-text/50 font-bold uppercase tracking-widest">
+                                <span className="flex items-center gap-2"><MapPin className="w-4 h-4 text-ink-blush" /> {user.location}</span>
+                                <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-ink-blush" /> Joined {user.joined}</span>
                             </div>
 
-                            <div className="flex items-center justify-center md:justify-start gap-6 pt-2">
-                                <div className="text-center md:text-left">
-                                    <span className="font-bold text-ink-text block text-lg">{user.stats.followers}</span>
-                                    <span className="text-xs text-ink-text/60 uppercase tracking-wider">Followers</span>
+                            <div className="flex items-center justify-center md:justify-start gap-10 pt-4">
+                                <div className="text-center md:text-left group cursor-pointer">
+                                    <span className="font-black text-ink-text block text-2xl group-hover:text-ink-blush transition-colors">{user.stats.followers}</span>
+                                    <span className="text-[10px] text-ink-text/40 uppercase tracking-widest font-black">Followers</span>
                                 </div>
-                                <div className="text-center md:text-left">
-                                    <span className="font-bold text-ink-text block text-lg">{user.stats.following}</span>
-                                    <span className="text-xs text-ink-text/60 uppercase tracking-wider">Following</span>
+                                <div className="text-center md:text-left group cursor-pointer">
+                                    <span className="font-black text-ink-text block text-2xl group-hover:text-ink-blush transition-colors">{user.stats.following}</span>
+                                    <span className="text-[10px] text-ink-text/40 uppercase tracking-widest font-black">Following</span>
                                 </div>
-                                <div className="text-center md:text-left">
-                                    <span className="font-bold text-ink-text block text-lg">{user.stats.posts}</span>
-                                    <span className="text-xs text-ink-text/60 uppercase tracking-wider">Posts</span>
+                                <div className="text-center md:text-left group cursor-pointer">
+                                    <span className="font-black text-ink-text block text-2xl group-hover:text-ink-blush transition-colors">{user.stats.posts}</span>
+                                    <span className="text-[10px] text-ink-text/40 uppercase tracking-widest font-black">Posts</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex gap-3">
+                        <div className="flex flex-wrap justify-center gap-4">
                             {isOwnProfile ? (
                                 <Link href="/settings">
-                                    <Button variant="outline">Edit Profile</Button>
+                                    <Button variant="outline" className="h-12 px-8 rounded-2xl border-2 font-bold hover:bg-ink-pink/10 hover:text-ink-blush transition-all">
+                                        Edit Profile
+                                    </Button>
                                 </Link>
                             ) : (
                                 <>
                                     <FollowButton followingId={user.id} initialIsFollowing={isFollowing} />
-                                    <Button variant="outline">Message</Button>
+                                    <MessageButton receiverId={user.id} receiverName={user.name} />
                                 </>
                             )}
                         </div>
@@ -123,48 +146,10 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                 </div>
             </div>
 
-            {/* User Content */}
-            <div className="container mx-auto px-4 md:px-6 py-12">
-                <div className="max-w-4xl mx-auto space-y-8">
-                    <div className="flex items-center gap-8 border-b border-ink-pink/20 pb-4">
-                        <button className="text-ink-blush font-bold border-b-2 border-ink-blush pb-4 px-2">Written</button>
-                        <button className="text-ink-text/60 hover:text-ink-blush font-medium px-2 pb-4">Liked</button>
-                        <button className="text-ink-text/60 hover:text-ink-blush font-medium px-2 pb-4">About</button>
-                    </div>
-
-                    <div className="grid gap-6">
-                        {user.posts.length > 0 ? user.posts.map((post: any, i: number) => (
-                            <Link href={`/stories/${post.slug}`} key={i}>
-                                <Card className="hover:shadow-md transition-shadow cursor-pointer bg-white/60 border-ink-text/5">
-                                    <CardContent className="p-6">
-                                        <div className="flex items-start justify-between gap-4">
-                                            <div className="space-y-2">
-                                                <div className="text-xs text-ink-text/50 font-medium flex items-center gap-2">
-                                                    {post.date} &bull; {post.readTime}
-                                                </div>
-                                                <h3 className="text-xl font-heading font-bold text-ink-text">{post.title}</h3>
-                                                <div className="text-ink-text/70 line-clamp-2 prose prose-sm prose-pink" dangerouslySetInnerHTML={{ __html: post.excerpt }} />
-
-                                                <div className="pt-4 flex items-center gap-4 text-ink-text/60 text-sm">
-                                                    <div className="flex items-center gap-1">
-                                                        <Heart className="w-4 h-4" /> {post.likes}
-                                                    </div>
-                                                    <div className="flex items-center gap-1">
-                                                        <MessageCircle className="w-4 h-4" /> {post.comments}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </Link>
-                        )) : (
-                            <div className="text-center py-20 bg-white/20 rounded-3xl border border-dashed border-ink-pink/30">
-                                <Sparkles className="w-12 h-12 text-ink-pink/30 mx-auto mb-4" />
-                                <p className="text-ink-text/50 font-medium">This writer hasn't published any stories yet.</p>
-                            </div>
-                        )}
-                    </div>
+            {/* Profile Content Tabs */}
+            <div className="container mx-auto px-4 md:px-6 pb-20">
+                <div className="max-w-4xl mx-auto">
+                    <ProfileTabs user={user} />
                 </div>
             </div>
 

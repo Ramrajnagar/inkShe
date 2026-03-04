@@ -24,8 +24,25 @@ model User {
   followers     Follow[] @relation("following")
   following     Follow[] @relation("follower")
 
+  sentMessages     Message[] @relation("sent")
+  receivedMessages Message[] @relation("received")
+
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  
+  senderId  String
+  sender    User     @relation("sent", fields: [senderId], references: [id])
+  
+  receiverId String
+  receiver   User     @relation("received", fields: [receiverId], references: [id])
+  
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
 
 model Post {

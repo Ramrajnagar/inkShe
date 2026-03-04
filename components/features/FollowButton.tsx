@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { UserPlus, UserMinus } from "lucide-react";
 
 export function FollowButton({
     followingId,
@@ -14,6 +15,10 @@ export function FollowButton({
     const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        setIsFollowing(initialIsFollowing);
+    }, [initialIsFollowing]);
 
     const handleFollow = async () => {
         setIsLoading(true);
@@ -39,12 +44,17 @@ export function FollowButton({
     return (
         <Button
             variant={isFollowing ? "outline" : "premium"}
-            size="sm"
-            className="h-6 px-3 text-[10px] rounded-full"
+            className={`h-12 px-8 rounded-2xl font-bold transition-all flex items-center gap-2 ${isFollowing ? "border-2 border-ink-pink/20 hover:border-ink-blush" : "shadow-lg shadow-ink-pink/20"
+                }`}
             onClick={handleFollow}
             disabled={isLoading}
         >
-            {isLoading ? "..." : (isFollowing ? "Following" : "Follow")}
+            {isLoading ? "..." : (
+                <>
+                    {isFollowing ? <UserMinus className="w-5 h-5" /> : <UserPlus className="w-5 h-5" />}
+                    {isFollowing ? "Unfollow" : "Follow Back"}
+                </>
+            )}
         </Button>
     );
 }
