@@ -73,19 +73,34 @@ export default function StoriesPage() {
                         />
                     </div>
 
-                    <div className="flex flex-wrap gap-2 justify-center">
-                        {categories.map((cat) => (
-                            <button
-                                key={cat}
-                                onClick={() => setActiveCategory(cat)}
-                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === cat
-                                    ? "bg-ink-blush text-white shadow-md shadow-ink-blush/20"
-                                    : "bg-white/40 text-ink-text/70 hover:bg-white/80"
-                                    }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
+                    <div className="flex flex-wrap gap-3 justify-center bg-white/30 backdrop-blur-md p-3 rounded-3xl border border-white/50 shadow-inner">
+                        {categories.map((cat) => {
+                            const isActive = activeCategory === cat;
+                            return (
+                                <motion.button
+                                    key={cat}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => setActiveCategory(cat)}
+                                    className={`relative px-5 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 ${isActive
+                                            ? "text-white shadow-lg overflow-hidden"
+                                            : "text-ink-text/60 hover:text-ink-blush bg-white/20 hover:bg-white/40"
+                                        }`}
+                                >
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="active-pill"
+                                            className="absolute inset-0 bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 z-0"
+                                            animate={{
+                                                background: ["linear-gradient(to right, #FB923C, #EC4899, #8B5CF6)", "linear-gradient(to right, #8B5CF6, #FB923C, #EC4899)", "linear-gradient(to right, #FB923C, #EC4899, #8B5CF6)"]
+                                            }}
+                                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                        />
+                                    )}
+                                    <span className="relative z-10">{cat}</span>
+                                </motion.button>
+                            );
+                        })}
                     </div>
                 </div>
 

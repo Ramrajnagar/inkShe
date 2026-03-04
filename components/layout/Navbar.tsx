@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Filter, Heart, Menu, PenTool } from "lucide-react";
+import { Filter, Heart, Menu, PenTool, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -31,19 +31,57 @@ export function Navbar() {
             <div className="container mx-auto px-4 md:px-6">
                 <div className="flex h-20 items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <Link href="/" className="flex items-center gap-3 group">
-                            <div className="bg-gradient-to-br from-ink-blush to-ink-purple p-2.5 rounded-xl text-white shadow-lg shadow-ink-pink/20 group-hover:scale-105 transition-transform">
+                        <Link href="/" className="flex items-center gap-3 group relative">
+                            {/* Holi Splash Effect behind logo */}
+                            <motion.div
+                                className="absolute -inset-2 bg-gradient-to-r from-orange-400 via-yellow-400 to-pink-500 rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity"
+                                animate={{
+                                    scale: [1, 1.2, 1],
+                                    rotate: [0, 90, 0]
+                                }}
+                                transition={{ duration: 4, repeat: Infinity }}
+                            />
+
+                            <div className="relative bg-gradient-to-br from-ink-blush via-ink-purple to-pink-600 p-2.5 rounded-2xl text-white shadow-[0_8px_30px_rgb(236,72,153,0.3)] group-hover:shadow-[0_8px_30px_rgb(236,72,153,0.5)] group-hover:-rotate-6 transition-all duration-500">
                                 <PenTool className="h-6 w-6 fill-current" />
                             </div>
-                            <span className="text-3xl font-heading font-black tracking-tight text-ink-text group-hover:text-ink-blush transition-colors">
-                                InkShe
-                            </span>
+
+                            <div className="flex flex-col">
+                                <span className="text-3xl font-heading font-black tracking-tight text-ink-text group-hover:text-ink-blush transition-colors drop-shadow-sm">
+                                    InkShe
+                                </span>
+                                <motion.span
+                                    initial={{ opacity: 0, y: -5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-[10px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 uppercase tracking-[0.2em] -mt-1"
+                                >
+                                    Creative Safe Space
+                                </motion.span>
+                            </div>
                         </Link>
-                        <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-green-50 rounded-full border border-green-200">
-                            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                            <span className="text-[10px] font-bold text-green-700 uppercase tracking-wider">
-                                {Math.floor(Math.random() * 50) + 120} Live
-                            </span>
+
+                        <div className="hidden lg:flex items-center gap-3">
+                            <div className="flex items-center gap-1.5 px-3 py-1 bg-green-50 rounded-full border border-green-200">
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                <span className="text-[10px] font-bold text-green-700 uppercase tracking-wider">
+                                    {Math.floor(Math.random() * 50) + 120} Live
+                                </span>
+                            </div>
+
+                            {/* Holi Celebration Badge */}
+                            <motion.div
+                                animate={{
+                                    scale: [1, 1.05, 1],
+                                    rotate: [-1, 1, -1]
+                                }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                className="flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-orange-100 via-pink-100 to-purple-100 rounded-full border border-pink-200 cursor-default"
+                            >
+                                <Sparkles className="w-3.5 h-3.5 text-orange-500" />
+                                <span className="text-[10px] font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600 uppercase tracking-tighter">
+                                    Happy Holi ✨
+                                </span>
+                            </motion.div>
                         </div>
                     </div>
 

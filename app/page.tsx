@@ -105,17 +105,26 @@ export default function Home() {
           >
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/70 backdrop-blur-md border border-ink-pink text-ink-blush font-semibold shadow-sm mb-6"
+              animate={{
+                boxShadow: ["0 0 0px #F472B6", "0 0 20px #F472B6", "0 0 0px #F472B6"]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-orange-100 via-pink-100 to-purple-100 border border-pink-300 text-pink-600 font-bold shadow-sm mb-6 cursor-default"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>A safe space created just for her.</span>
+              <Sparkles className="w-4 h-4 text-orange-400" />
+              <span>Holi Limited Edition: Your Creative Festival ✨</span>
             </motion.div>
 
             <h1 className="text-6xl md:text-8xl font-heading font-bold text-ink-text leading-[1.1] tracking-tight">
-              Your words. <br />
-              <span className="relative inline-block text-ink-blush">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500">Your words.</span> <br />
+              <span className="relative inline-block text-ink-blush group">
                 Your freedom.
                 <SketchUnderline className="absolute -bottom-2 left-0 w-full text-ink-pink h-6" delay={1} />
+                <motion.div
+                  className="absolute -inset-4 bg-gradient-to-r from-yellow-200 to-pink-200 rounded-full blur-2xl opacity-0 group-hover:opacity-40 transition-opacity"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                />
               </span>
             </h1>
 
