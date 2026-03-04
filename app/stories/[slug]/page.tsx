@@ -46,7 +46,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
     try {
         if (!slug.startsWith('mock-')) {
-            const dbPost = await db.post.update({
+            const dbPost = await (db.post as any).update({
                 where: { slug: slug },
                 data: { views: { increment: 1 } },
                 include: {
@@ -60,7 +60,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
             if (dbPost) {
                 actualId = dbPost.id;
-                const isFollowing = (session && typeof session !== "string") ? dbPost.author.followers.some(f => f.followerId === session.userId) : false;
+                const isFollowing = (session && typeof session !== "string" && (session as any).userId) ? dbPost.author?.followers?.some((f: any) => f.followerId === (session as any).userId) : false;
 
                 post = {
                     id: dbPost.id,
@@ -101,6 +101,11 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
             <Navbar />
 
             <article className="container mx-auto px-4 md:px-6 py-12 max-w-3xl">
+                <Link href="/stories" className="inline-flex items-center text-sm text-ink-text/40 hover:text-ink-blush mb-8 transition-colors group">
+                    <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span>
+                    Back to Stories
+                </Link>
+
                 {/* Header */}
                 <header className="mb-8 space-y-6">
                     <div className="flex items-center justify-between">
@@ -164,7 +169,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
                 {/* Content */}
                 <div
                     className="prose prose-lg prose-pink max-w-none font-body text-ink-text/90 leading-loose text-left"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    dangerouslySetInnerHTML={{ __html: post.content.replace(/(@\w+)/g, '<a href="/u/$1" class="text-ink-blush font-bold hover:underline no-underline">$1</a>').replace("/u/@", "/u/") }}
                 />
 
                 {/* Live Interactions (Likes & Comments) */}
