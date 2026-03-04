@@ -60,13 +60,13 @@ export async function GET(req: Request) {
         const limit = parseInt(searchParams.get("limit") || "10");
         const featured = searchParams.get("featured") === "true";
 
-        const stories = await db.post.findMany({
+        const stories = await (db.post as any).findMany({
             where: {
                 published: true,
-                category: {
-                    not: "Community",
-                },
-                // Add featured logic if we had a featured flag, for now just latest
+                OR: [
+                    { category: { equals: null } },
+                    { category: { not: "Community" } }
+                ]
             },
             take: limit,
             orderBy: {

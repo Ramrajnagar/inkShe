@@ -8,6 +8,10 @@ import { Filter, Heart, Menu, PenTool } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then(res => res.json());
+
 const navItems = [
     { name: "Stories", href: "/stories" },
     { name: "Community", href: "/community" },
@@ -17,6 +21,10 @@ const navItems = [
 export function Navbar() {
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const { data: sessionData } = useSWR('/api/auth/session', fetcher);
+    const session = sessionData?.session;
+    const user = sessionData?.user;
 
     return (
         <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-xl border-b-2 border-ink-pink/20 shadow-sm transition-all duration-300">
@@ -53,19 +61,50 @@ export function Navbar() {
                                 {item.name}
                             </Link>
                         ))}
+                        {session && (
+                            <Link
+                                href="/dashboard"
+                                className={cn(
+                                    "text-base font-bold transition-all hover:text-ink-blush px-4 py-2 rounded-full hover:bg-ink-pink/10",
+                                    pathname === "/dashboard" ? "text-ink-blush bg-ink-pink/5" : "text-ink-text/70"
+                                )}
+                            >
+                                Dashboard
+                            </Link>
+                        )}
                     </div>
 
                     <div className="hidden md:flex items-center gap-4">
-                        <Link href="/login">
-                            <Button variant="ghost" size="lg" className="font-semibold text-ink-text hover:text-ink-blush hover:bg-ink-pink/10">
-                                Log in
-                            </Button>
-                        </Link>
-                        <Link href="/signup">
-                            <Button variant="premium" size="lg" className="shadow-md shadow-ink-pink/20 font-bold px-6">
-                                Start Writing
-                            </Button>
-                        </Link>
+                        {session ? (
+                            <>
+                                <Link href={`/u/${user?.penName || 'writer'}`}>
+                                    <Button variant="ghost" className="font-semibold text-ink-text flex items-center gap-2 px-3">
+                                        <div className="w-8 h-8 rounded-full bg-ink-pink/20 flex items-center justify-center text-ink-blush text-xs font-bold">
+                                            {user?.penName?.[0] || 'W'}
+                                        </div>
+                                        <span>My Profile</span>
+                                    </Button>
+                                </Link>
+                                <Link href="/write">
+                                    <Button variant="premium" className="shadow-md font-bold px-6">
+                                        Write Story
+                                    </Button>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/login">
+                                    <Button variant="ghost" size="lg" className="font-semibold text-ink-text hover:text-ink-blush hover:bg-ink-pink/10">
+                                        Log in
+                                    </Button>
+                                </Link>
+                                <Link href="/signup">
+                                    <Button variant="premium" size="lg" className="shadow-md shadow-ink-pink/20 font-bold px-6">
+                                        Start Writing
+                                    </Button>
+                                </Link>
+                            </>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -98,17 +137,43 @@ export function Navbar() {
                                     {item.name}
                                 </Link>
                             ))}
+                            {session && (
+                                <Link
+                                    href="/dashboard"
+                                    className="text-lg font-bold text-ink-text/80 hover:text-ink-blush p-2 hover:bg-ink-pink/5 rounded-lg"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    Dashboard
+                                </Link>
+                            )}
                             <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-ink-pink/10">
-                                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button variant="ghost" className="justify-start w-full text-lg font-semibold">
-                                        Log in
-                                    </Button>
-                                </Link>
-                                <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                                    <Button variant="premium" className="justify-start w-full text-lg font-bold shadow-md">
-                                        Start Writing
-                                    </Button>
-                                </Link>
+                                {session ? (
+                                    <>
+                                        <Link href={`/u/${user?.penName || 'writer'}`} onClick={() => setIsMobileMenuOpen(false)}>
+                                            <Button variant="ghost" className="justify-start w-full text-lg font-semibold px-2">
+                                                My Profile
+                                            </Button>
+                                        </Link>
+                                        <Link href="/write" onClick={() => setIsMobileMenuOpen(false)}>
+                                            <Button variant="premium" className="justify-start w-full text-lg font-bold shadow-md">
+                                                Write Story
+                                            </Button>
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                                            <Button variant="ghost" className="justify-start w-full text-lg font-semibold">
+                                                Log in
+                                            </Button>
+                                        </Link>
+                                        <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                                            <Button variant="premium" className="justify-start w-full text-lg font-bold shadow-md">
+                                                Start Writing
+                                            </Button>
+                                        </Link>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </motion.div>
